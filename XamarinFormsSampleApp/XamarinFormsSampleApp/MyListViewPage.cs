@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using XamarinFormsSampleApp.MyServices;
 
@@ -35,8 +36,7 @@ namespace XamarinFormsSampleApp
                     areaEntry.Text = "大安區";
                 }
 
-                var resultData = await myWebApiService.GetDataAsync(cityEntry.Text, areaEntry.Text);
-                familyStoreDataList = JsonConvert.DeserializeObject<List<FamilyStore>>(resultData);
+                familyStoreDataList = await GetFamilyStoreData(cityEntry.Text, areaEntry.Text);
 
                 Debug.WriteLine(familyStoreDataList.Count);
             };
@@ -89,6 +89,20 @@ namespace XamarinFormsSampleApp
                     listView
                 }
             };
+        }
+
+        private async Task<List<FamilyStore>> GetFamilyStoreData(string city, string area)
+        {
+            var result = new List<FamilyStore>();
+
+            var resultData = await myWebApiService.GetDataAsync(cityEntry.Text, areaEntry.Text);
+
+            if (string.IsNullOrWhiteSpace(resultData) == false)
+            {
+                result = JsonConvert.DeserializeObject<List<FamilyStore>>(resultData);
+            }
+
+            return result;
         }
     }
 
