@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using XamarinFormsSampleApp.MyServices;
@@ -37,6 +38,18 @@ namespace XamarinFormsSampleApp
                 }
 
                 familyStoreDataList = await GetFamilyStoreData(cityEntry.Text, areaEntry.Text);
+
+                if (familyStoreDataList.Count > 0)
+                {
+                    var sourceData = familyStoreDataList.Select(s => new StoreData
+                    {
+                        Name = s.NAME,
+                        Address = s.addr,
+                        Tel = s.TEL
+                    }).ToList();
+
+                    BindListView(sourceData);
+                }
 
                 Debug.WriteLine(familyStoreDataList.Count);
             };
