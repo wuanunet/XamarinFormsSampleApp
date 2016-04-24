@@ -26,17 +26,17 @@ namespace XamarinFormsSampleApp
             cityEntry = new Entry { Placeholder = "請輸入城市名稱" };
             areaEntry = new Entry { Placeholder = "請輸入行政區域" };
 
+            if (string.IsNullOrWhiteSpace(cityEntry.Text))
+            {
+                cityEntry.Text = "台北市";
+            }
+            if (string.IsNullOrWhiteSpace(areaEntry.Text))
+            {
+                areaEntry.Text = "大安區";
+            }
+
             searchButton.Clicked += async (sender, e) =>
             {
-                if (string.IsNullOrWhiteSpace(cityEntry.Text))
-                {
-                    cityEntry.Text = "台北市";
-                }
-                if (string.IsNullOrWhiteSpace(areaEntry.Text))
-                {
-                    areaEntry.Text = "大安區";
-                }
-
                 familyStoreDataList = await GetFamilyStoreData(cityEntry.Text, areaEntry.Text);
 
                 if (familyStoreDataList.Count > 0)
