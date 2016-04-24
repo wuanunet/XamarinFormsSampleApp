@@ -43,52 +43,16 @@ namespace XamarinFormsSampleApp
 
             Title = title;
 
-            var listView = new ListView
+            var defaultData = new List<StoreData>
             {
-                IsPullToRefreshEnabled = true,
-                RowHeight = 80,
-                ItemsSource = new[]
-                {
-                    new StoreData {Name = "全家大安店", Address = "台北市大安區大安路一段20號", Tel = "02-27117896"},
-                    new StoreData {Name = "全家仁慈店", Address = "台北市大安區仁愛路四段48巷6號", Tel = "02-27089002"},
-                    new StoreData {Name = "全家明曜店", Address = "台北市大安區仁愛路四段151巷34號", Tel = "02-27780326"},
-                    new StoreData {Name = "全家國泰店", Address = "台北市大安區仁愛路四段266巷15弄10號", Tel = "02-27542056"},
-                    new StoreData {Name = "全家忠愛店", Address = "台北市大安區仁愛路四段27巷43號", Tel = "02-27314580"}
-                },
-                ItemTemplate = new DataTemplate(typeof(MyListViewCell))
+                new StoreData {Name = "全家大安店", Address = "台北市大安區大安路一段20號", Tel = "02-27117896"},
+                new StoreData {Name = "全家仁慈店", Address = "台北市大安區仁愛路四段48巷6號", Tel = "02-27089002"},
+                new StoreData {Name = "全家明曜店", Address = "台北市大安區仁愛路四段151巷34號", Tel = "02-27780326"},
+                new StoreData {Name = "全家國泰店", Address = "台北市大安區仁愛路四段266巷15弄10號", Tel = "02-27542056"},
+                new StoreData {Name = "全家忠愛店", Address = "台北市大安區仁愛路四段27巷43號", Tel = "02-27314580"}
             };
 
-            listView.ItemTapped += (sender, e) =>
-            {
-                var baseUrl = "https://www.google.com.tw/maps/place/";
-                var storeData = e.Item as StoreData;
-
-                if (storeData != null)
-                {
-                    Device.OpenUri(new Uri($"{baseUrl}{storeData.Address}"));
-                }
-
-                ((ListView)sender).SelectedItem = null;
-            };
-
-            Padding = new Thickness(0, 20, 0, 0);
-            Content = new StackLayout
-            {
-                Orientation = StackOrientation.Vertical,
-                Children =
-                {
-                    cityEntry,
-                    areaEntry,
-                    searchButton,
-                    new Label
-                    {
-                        HorizontalTextAlignment= TextAlignment.Center,
-                        Text = Title,
-                        FontSize = 30
-                    },
-                    listView
-                }
-            };
+            BindListView(defaultData);
         }
 
         private async Task<List<FamilyStore>> GetFamilyStoreData(string city, string area)
