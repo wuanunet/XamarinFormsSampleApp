@@ -51,7 +51,7 @@ namespace XamarinFormsSampleApp
                     BindListView(sourceData);
                 }
 
-                DisplayAlert("資料結果為", familyStoreDataList.Count + " 筆", "知道了");
+                await DisplayAlert("資料結果為", familyStoreDataList.Count + " 筆", "知道了");
                 Debug.WriteLine(familyStoreDataList.Count);
             };
 
