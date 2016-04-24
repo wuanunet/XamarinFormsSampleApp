@@ -104,6 +104,49 @@ namespace XamarinFormsSampleApp
 
             return result;
         }
+
+        private void BindListView(List<StoreData> sourceData)
+        {
+            var listView = new ListView
+            {
+                IsPullToRefreshEnabled = true,
+                RowHeight = 80,
+                ItemsSource = sourceData,
+                ItemTemplate = new DataTemplate(typeof(MyListViewCell))
+            };
+
+            listView.ItemTapped += (sender, e) =>
+            {
+                var baseUrl = "https://www.google.com.tw/maps/place/";
+                var storeData = e.Item as StoreData;
+
+                if (storeData != null)
+                {
+                    Device.OpenUri(new Uri($"{baseUrl}{storeData.Address}"));
+                }
+
+                ((ListView)sender).SelectedItem = null;
+            };
+
+            Padding = new Thickness(0, 20, 0, 0);
+            Content = new StackLayout
+            {
+                Orientation = StackOrientation.Vertical,
+                Children =
+                {
+                    cityEntry,
+                    areaEntry,
+                    searchButton,
+                    new Label
+                    {
+                        HorizontalTextAlignment= TextAlignment.Center,
+                        Text = Title,
+                        FontSize = 30
+                    },
+                    listView
+                }
+            };
+        }
     }
 
     public class StoreData
