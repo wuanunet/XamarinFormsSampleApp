@@ -12,12 +12,12 @@ namespace XamarinFormsSampleApp
         private Button searchButton;
         private Entry cityEntry;
         private Entry areaEntry;
-        private List<FamilyStore> myStoreDataList;
+        private List<FamilyStore> familyStoreDataList;
         private readonly WebApiServices myWebApiService;
 
         public MyListViewPage(string title)
         {
-            myStoreDataList = new List<FamilyStore>();
+            familyStoreDataList = new List<FamilyStore>();
             myWebApiService = new WebApiServices();
 
             searchButton = new Button { Text = "Search" };
@@ -36,9 +36,9 @@ namespace XamarinFormsSampleApp
                 }
 
                 var resultData = await myWebApiService.GetDataAsync(cityEntry.Text, areaEntry.Text);
-                myStoreDataList = JsonConvert.DeserializeObject<List<FamilyStore>>(resultData);
+                familyStoreDataList = JsonConvert.DeserializeObject<List<FamilyStore>>(resultData);
 
-                Debug.WriteLine(myStoreDataList.Count);
+                Debug.WriteLine(familyStoreDataList.Count);
             };
 
             Title = title;
